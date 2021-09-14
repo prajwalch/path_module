@@ -1,11 +1,12 @@
 # Path Module For C
-**Simple lightweight pathname parser for C without any external dependencies. This module helps to parse dirname, basename, filename, file extension along with their length**
+**Simple and lightweight pathname parser for C without any external dependencies. This module helps to parse dirname, basename, filename, file extension along with their length**
 
 ## Building
 Just place `path.c` and `path.h` then include the header file on your project and compile it later with your project.
 
 ## API
 There are only 3 functions. one for parsing, one for freeing memory and one for printing the path struct.
+
 ```c
 // path structure
 struct Path {
@@ -43,5 +44,3 @@ int main(void)
 
 ```
 Output: ![example-output](img/path_module_example.png)
-
-
