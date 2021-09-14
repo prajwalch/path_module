@@ -78,7 +78,7 @@ static void path_get_filename(struct Path *path)
     }
 }
 
-static void path_get_basename(const char *pathname, const char *last_slash, struct Path *path)
+static void path_get_basename(const char *pathname, char *last_slash, struct Path *path)
 {
     if (last_slash == NULL) {
         path->basename_len = strlen(pathname);
@@ -89,10 +89,10 @@ static void path_get_basename(const char *pathname, const char *last_slash, stru
     // ignore the '/' and move pointer to forward
     ++last_slash;
     path->basename_len = strlen(last_slash);
-    path->basename = (char *)last_slash;
+    path->basename = last_slash;
 }
 
-static void path_get_dirname(const char *pathname, const char *last_slash, struct Path *path)
+static void path_get_dirname(const char *pathname, char *last_slash, struct Path *path)
 {
     if (path->dirname == NULL) {
         size_t num_starting_slashes = strspn(pathname, "/");
@@ -106,9 +106,9 @@ static void path_get_dirname(const char *pathname, const char *last_slash, struc
     }
 }
 
-static char *path_check_remain_chars(const char *pathname, const char *last_slash)
+static char *path_check_remain_chars(const char *pathname, char *last_slash)
 {
-    char *ptr_idx = (char *)last_slash;
+    char *ptr_idx = last_slash;
 
     for (; ptr_idx != pathname; --ptr_idx)
         if (ptr_idx[-1] != '/')
