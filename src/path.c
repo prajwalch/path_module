@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DOT "."
-
 void path_dbgln(const char *pathname, struct Path *path)
 {
     printf("pathname : %s\n"
@@ -41,8 +39,9 @@ void path_dbgln(const char *pathname, struct Path *path)
 
 void path_free_mem(struct Path *path)
 {
-    if (path->dirname_len != 1 &&
-        (strncmp(path->dirname, DOT, 1) != 0)) {
+    static const char DOT[] = ".";
+
+    if (path->dirname_len != 1 && path->dirname != DOT) {
         free(path->dirname);
         path->dirname = NULL;
         path->dirname_len = 0;
@@ -64,7 +63,7 @@ void path_free_mem(struct Path *path)
 static void path_get_filename(struct Path *path)
 {
     if (path->basename != NULL) {
-        const char *file_ext_dot = strchr(path->basename, '.');
+        char *file_ext_dot = strchr(path->basename, '.');
 
         if (file_ext_dot != NULL) {
             path->filename_len = strnlen(path->basename, file_ext_dot - path->basename);
@@ -83,21 +82,21 @@ static void path_get_basename(const char *pathname, const char *last_slash, stru
 {
     if (last_slash == NULL) {
         path->basename_len = strlen(pathname);
-        path->basename = pathname;
+        path->basename = (char *)pathname;
         return;
     }
     
     // ignore the '/' and move pointer to forward
     ++last_slash;
     path->basename_len = strlen(last_slash);
-    path->basename = last_slash;
+    path->basename = (char *)last_slash;
 }
 
 static void path_get_dirname(const char *pathname, const char *last_slash, struct Path *path)
 {
     if (path->dirname == NULL) {
         size_t num_starting_slashes = strspn(pathname, "/");
-        const char *pathname_Wskip_slashes = pathname + num_starting_slashes;
+        char *pathname_Wskip_slashes = (char *)pathname + num_starting_slashes;
 
         path->dirname_len = strnlen(pathname_Wskip_slashes, last_slash - pathname_Wskip_slashes);
         path->dirname = malloc(sizeof(char) * path->dirname_len + 1);
@@ -107,9 +106,9 @@ static void path_get_dirname(const char *pathname, const char *last_slash, struc
     }
 }
 
-static const char *path_check_remain_chars(const char *pathname, const char *last_slash)
+static char *path_check_remain_chars(const char *pathname, const char *last_slash)
 {
-    const char *ptr_idx = last_slash;
+    char *ptr_idx = (char *)last_slash;
 
     for (; ptr_idx != pathname; --ptr_idx)
         if (ptr_idx[-1] != '/')
@@ -120,6 +119,8 @@ static const char *path_check_remain_chars(const char *pathname, const char *las
 
 struct Path path_parse(const char *pathname)
 {
+    static const char DOT[] = ".";
+    
     struct Path path = {
         .dirname = NULL,
         .basename = NULL,
@@ -131,16 +132,16 @@ struct Path path_parse(const char *pathname)
         .file_ext_len = 0
     };
 
-    const char *last_slash = strrchr(pathname, '/');
-    const char *ptr_idx = NULL;
+    char *last_slash = strrchr(pathname, '/');
+    char *ptr_idx = NULL;
 
     if (last_slash != NULL && last_slash == pathname && last_slash[1] == '\0') {
-        path.dirname = DOT;
+        path.dirname = (char *)DOT;
         return path;
     }
 
     if (last_slash == NULL && pathname[0] == '.' && pathname[1] == '\0') {
-        path.dirname = pathname;
+        path.dirname = (char *)pathname;
         return path;
     }
 
@@ -161,14 +162,14 @@ struct Path path_parse(const char *pathname)
         // ex: //root/basename
         if (ptr_idx == pathname) {
             // ignore all of them and only return '.'
-            path.dirname = DOT;
+            path.dirname = (char *)DOT;
         }
         else {
             last_slash = ptr_idx;
         }
         path_get_dirname(pathname, last_slash, &path);
     } else {
-        path.dirname = DOT;
+        path.dirname = (char *)DOT;
     }
 
     path_get_basename(pathname, last_slash, &path);
