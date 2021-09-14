@@ -65,7 +65,7 @@ static void path_get_filename(struct Path *path)
 {
     if (path->basename != NULL) {
         const char *file_ext_dot = strchr(path->basename, '.');
-        
+
         if (file_ext_dot != NULL) {
             path->filename_len = strnlen(path->basename, file_ext_dot - path->basename);
             path->filename = malloc(sizeof(char) * path->filename_len + 1);
@@ -86,7 +86,8 @@ static void path_get_basename(const char *pathname, const char *last_slash, stru
         path->basename = pathname;
         return;
     }
-
+    
+    // ignore the '/' and move pointer to forward
     ++last_slash;
     path->basename_len = strlen(last_slash);
     path->basename = last_slash;
@@ -95,7 +96,7 @@ static void path_get_basename(const char *pathname, const char *last_slash, stru
 static void path_get_dirname(const char *pathname, const char *last_slash, struct Path *path)
 {
     if (path->dirname == NULL) {
-        size_t num_starting_slashes = strspn(pathname, DOT);
+        size_t num_starting_slashes = strspn(pathname, "/");
         const char *pathname_Wskip_slashes = pathname + num_starting_slashes;
 
         path->dirname_len = strnlen(pathname_Wskip_slashes, last_slash - pathname_Wskip_slashes);
@@ -109,9 +110,11 @@ static void path_get_dirname(const char *pathname, const char *last_slash, struc
 static const char *path_check_remain_chars(const char *pathname, const char *last_slash)
 {
     const char *ptr_idx = last_slash;
+
     for (; ptr_idx != pathname; --ptr_idx)
         if (ptr_idx[-1] != '/')
             return ptr_idx;
+
     return ptr_idx;
 }
 
@@ -141,8 +144,8 @@ struct Path path_parse(const char *pathname)
         return path;
     }
 
+    // ignore the actual last useless slash and search another
     // ex: /root/base/
-    // ignore the actual last slash and search another
     if (last_slash != NULL && last_slash != pathname && last_slash[1] == '\0') {
         ptr_idx = path_check_remain_chars(pathname, last_slash);
 
@@ -150,16 +153,14 @@ struct Path path_parse(const char *pathname)
             last_slash = memrchr(pathname, '/', ptr_idx - pathname);
     }
 
-    // ex: root/
-    // after first condition executed
     if (last_slash != NULL) {
 
         ptr_idx = path_check_remain_chars(pathname, last_slash);
 
-        // we have multiple slashes at the begining of path
+        // there are multiple slashes at the begining of path
         // ex: //root/basename
         if (ptr_idx == pathname) {
-            // ignore all of them and only return '/'
+            // ignore all of them and only return '.'
             path.dirname = DOT;
         }
         else {
