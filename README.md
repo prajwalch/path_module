@@ -40,7 +40,7 @@ There is also a test file in _src_ dir where you can see example.
 
 int main(void)
 {
-    const char *pathname = "/projects/path_module/path.c";
+    char *pathname = "/projects/path_module/path.c";
 
     struct Path path = path_parse(pathname);
     path_dbgln(pathname, &path);
@@ -53,7 +53,7 @@ If you want to print or copy individual parts by yourself..
 ```c
 int main(void)
 {
-    const char *pathname = "/projects/path_module/path.c";
+    char *pathname = "/projects/path_module/path.c";
 
     struct Path path = path_parse(pathname);
 
