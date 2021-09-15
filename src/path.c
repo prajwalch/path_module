@@ -21,10 +21,10 @@ void path_dbgln(char *pathname, struct Path *path)
            "---------------------\n"
            "file ext : %s\n",
            pathname,
-           path->dirname_len,
+           (int)path->dirname_len,
            path->dirname,
            path->basename,
-           path->filename_len,
+           (int)path->filename_len,
            path->filename,
            path->file_ext);
 }
