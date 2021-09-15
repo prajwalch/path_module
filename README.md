@@ -59,9 +59,9 @@ int main(void)
 
     // there is no need to use length while printing for basename and file extension but it's recommend to use if want to copy on another buffer for safe.
 
-    printf("dirname: %.*s\n", path.dirname_len, path.dirname);
+    printf("dirname: %.*s\n", (int)path.dirname_len, path.dirname);
     printf("basename: %s\n", path.basename);
-    printf("filename: %.*s\n", path.filename_len, path.filename);
+    printf("filename: %.*s\n", (int)path.filename_len, path.filename);
     printf("file ext: %s\n", path.file_ext);
 
     // copy to another buffer
