@@ -1,11 +1,17 @@
 # Path Module For C
-**Simple and lightweight pathname parser for C without any external dependencies. This module helps to parse dirname, basename, filename, file extension along with their length**
+**Simple and lightweight pathname parser for C without any external dependencies. This module helps to parse dirname, basename, filename, file extension.**
 
 ## Building
-Just place `path.c` and `path.h` then include the header file on your project and compile it later with your project.
+If you want to use this on your project just place `path.c` and `path.h` then compile it along with your project. But if you want test it before using it on your project clone this repo and their is a `Makefile` from where you can compile the source and test file together.
+* clone this repo
+   ```bash
+   git clone https://github.com/PrajwalCH/path_module
+   cd path_module
+   ```
+* Compile it by running `make` or for debug build `make DEBUG=1`
 
 ## API
-There are only 3 functions. one for parsing, one for freeing memory and one for printing the path struct.
+There are only 2 functions. one for parsing and one for debug printing the path structure.
 
 ```c
 // path structure
@@ -20,12 +26,11 @@ struct Path {
     size_t file_ext_len;
 };
 
-struct Path path_parse(const char *pathname);
-void path_free_mem(struct Path *path);
-void path_dbgln(const char *pathname, struct Path *path);
+struct Path path_parse(char *pathname);
+void path_dbgln(char *pathname, struct Path *path);
 ```
 
-## Example
+## Examples
 There is also a test file in _src_ dir where you can see example.
 
 ```c
@@ -39,8 +44,31 @@ int main(void)
 
     struct Path path = path_parse(pathname);
     path_dbgln(pathname, &path);
-    path_free_mem(&path);
 }
 
 ```
-Output: ![example-output](img/path_module_example.png)
+Output: ![example-output](img/new_example.png)
+
+If you want to print or copy individual parts by yourself..
+```c
+int main(void)
+{
+    const char *pathname = "/projects/path_module/path.c";
+
+    struct Path path = path_parse(pathname);
+
+    // there is no need to use length while printing for basename and file extension but it's recommend to use if want to copy on another buffer for safe.
+
+    printf("dirname: %.*s\n", path.dirname_len, path.dirname);
+    printf("basename: %s\n", path.basename);
+    printf("filename: %.*s\n", path.filename_len, path.filename);
+    printf("file ext: %s\n", path.file_ext);
+
+    // copy to another buffer
+    char dirname[path.dirname_len + 1];
+    memset(dirname, 0, sizeof(dirname));
+
+    memcpy(dirname, path.dirname, path.dirname_len);
+    printf("your dirname: %s\n", dirname);
+}
+```
