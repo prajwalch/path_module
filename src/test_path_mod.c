@@ -13,7 +13,7 @@
 
 int main(int argc, char **argv)
 {
-    const char *pathname = argc == 2 ? argv[1] : "root/hello.txt";
+    char *pathname = argc == 2 ? argv[1] : "root/hello.txt";
 
     struct Path path = path_parse(pathname);
     path_dbgln(pathname, &path);
