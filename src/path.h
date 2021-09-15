@@ -21,9 +21,8 @@ struct Path {
     size_t file_ext_len;
 };
 
-void path_dbgln(const char *pathname, struct Path *path);
-void path_free_mem(struct Path *path);
-struct Path path_parse(const char *pathname);
+void path_dbgln(char *pathname, struct Path *path);
+struct Path path_parse(char *pathname);
 
 #endif /* PATH_H */
 
