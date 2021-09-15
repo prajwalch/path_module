@@ -13,11 +13,11 @@
 
 int main(int argc, char **argv)
 {
-    char *pathname = argv[1] ? argv[1] : "root/hello.txt";
+    const char *pathname = argc == 2 ? argv[1] : "root/hello.txt";
 
     struct Path path = path_parse(pathname);
     path_dbgln(pathname, &path);
-    path_free_mem(&path);
+
     return 0;
 }
 
