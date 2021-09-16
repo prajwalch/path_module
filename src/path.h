@@ -13,12 +13,12 @@
 struct Path {
     char *dirname;
     char *basename;
-    char *filename;
-    char *file_ext;
+    //char *filename;
+    //char *file_ext;
     size_t dirname_len;
     size_t basename_len;
-    size_t filename_len;
-    size_t file_ext_len;
+    //size_t filename_len;
+    //size_t file_ext_len;
 };
 
 void path_dbgln(char *pathname, struct Path *path);
