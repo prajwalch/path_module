@@ -1,7 +1,4 @@
 # Path Module For C
-Don't use this module instead use original [dirname](https://www.man7.org/linux/man-pages/man3/basename.3.html) and [basename](https://www.man7.org/linux/man-pages/man3/basename.3.html).
-This module is just a shit and doesn't handle the path properly.
-
 File name and extension parsing functionality are removed because it's difficult to distinguish between a hidden dir **(ex: .git)** and filename. Their code are not completely removed only commented. So if still you want use that functionality uncomment and use it.
 
 ## Building
