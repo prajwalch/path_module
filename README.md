@@ -2,6 +2,10 @@
 Don't use this module instead use original [dirname](https://www.man7.org/linux/man-pages/man3/basename.3.html) and [basename](https://www.man7.org/linux/man-pages/man3/basename.3.html).
 This module is just a shit and doesn't handle the path properly. If you want to extract filename and file extension from the path use _basename_ and work around yourself.
 
+If still you want to use, there are 2 things to fix before using it
+* Remove filename and file ext, Don't parse it
+* If '/' is fed don't return '.' for dirname. Return only when '.' or NULL is fed
+
 ## Building
 If you want to use this on your project just place `path.c` and `path.h` then compile it along with your project. But if you want test it before using it on your project clone this repo and their is a `Makefile` from where you can compile the source and test file together.
 * clone this repo
