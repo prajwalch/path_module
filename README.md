@@ -23,12 +23,8 @@ There are only 2 functions. one for parsing and one for debug printing the path 
 struct Path {
     char *dirname;
     char *basename;
-    char *filename;
-    char *file_ext;
     size_t dirname_len;
     size_t basename_len;
-    size_t filename_len;
-    size_t file_ext_len;
 };
 
 struct Path path_parse(char *pathname);
@@ -52,7 +48,7 @@ int main(void)
 }
 
 ```
-Output: ![example-output](img/new_example.png)
+Output: ![example-output](example_output.png)
 
 If you want to print or copy individual parts by yourself..
 ```c
@@ -66,8 +62,6 @@ int main(void)
 
     printf("dirname: %.*s\n", (int)path.dirname_len, path.dirname);
     printf("basename: %s\n", path.basename);
-    printf("filename: %.*s\n", (int)path.filename_len, path.filename);
-    printf("file ext: %s\n", path.file_ext);
 
     // copy to another buffer
     char dirname[path.dirname_len + 1];
