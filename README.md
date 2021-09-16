@@ -1,5 +1,6 @@
 # Path Module For C
-**Simple and lightweight pathname parser for C without any external dependencies. This module helps to parse dirname, basename, filename, file extension.**
+Dont use this module instead use orginal (dirname)[https://www.man7.org/linux/man-pages/man3/basename.3.html] and (basename)[https://www.man7.org/linux/man-pages/man3/basename.3.html].
+This module is just a shit and doesn't handle all the cases.
 
 ## Building
 If you want to use this on your project just place `path.c` and `path.h` then compile it along with your project. But if you want test it before using it on your project clone this repo and their is a `Makefile` from where you can compile the source and test file together.
