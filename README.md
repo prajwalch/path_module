@@ -1,5 +1,5 @@
 # Path Module For C
-Dont use this module instead use orginal (dirname)[https://www.man7.org/linux/man-pages/man3/basename.3.html] and (basename)[https://www.man7.org/linux/man-pages/man3/basename.3.html].
+Dont use this module instead use orginal [dirname](https://www.man7.org/linux/man-pages/man3/basename.3.html) and [basename](https://www.man7.org/linux/man-pages/man3/basename.3.html).
 This module is just a shit and doesn't handle all the cases.
 
 ## Building
