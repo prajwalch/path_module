@@ -2,7 +2,7 @@
 Don't use this module instead use original [dirname](https://www.man7.org/linux/man-pages/man3/basename.3.html) and [basename](https://www.man7.org/linux/man-pages/man3/basename.3.html).
 This module is just a shit and doesn't handle the path properly.
 
-File name and extension parsing functionality are removed because it was difficult to distinguish between a hidden dir (ex: .git) and filename. Their code are not completely removed only commented. So if still you want use that functionality uncomment and use that.
+File name and extension parsing functionality are removed because it's difficult to distinguish between a hidden dir **(ex: .git)** and filename. Their code are not completely removed only commented. So if still you want use that functionality uncomment and use it.
 
 ## Building
 If you want to use this on your project just place `path.c` and `path.h` then compile it along with your project. But if you want test it before using it on your project clone this repo and their is a `Makefile` from where you can compile the source and test file together.
